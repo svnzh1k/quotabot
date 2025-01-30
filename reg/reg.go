@@ -57,8 +57,8 @@ func (r *Requester) HandleWithoutPractice(lec map[string]CourseRight) string {
 	var msg strings.Builder
 	for k, v := range lec {
 		if v.Quota > v.StudCount+v.Reserved && !r.Printed[k] {
-			msg.WriteString(fmt.Sprintf("Course: %s\n", v.DersCode))
-			msg.WriteString(fmt.Sprintf("  Lecture:\n    Schedule: %s\n    Teacher: %s\n", v.Schedule, v.Teacher))
+			msg.WriteString(fmt.Sprintf("%s\n", v.DersCode))
+			msg.WriteString(fmt.Sprintf("  Lecture: %s %s\n", v.Schedule, v.Teacher))
 			msg.WriteString("------------------------------------------------------------\n")
 			r.Printed[k] = true
 		} else if v.Quota == v.StudCount {
@@ -76,9 +76,9 @@ func (r *Requester) HandleWithPractice(lec map[string]CourseRight, prac map[stri
 		if lec[lecId].Quota > lec[lecId].StudCount+lec[lecId].Reserved {
 			if prac[pracId].Quota > prac[pracId].StudCount && !r.Printed[k] {
 				r.Printed[k] = true
-				msg.WriteString(fmt.Sprintf("Course: %s\n", lec[lecId].DersCode))
-				msg.WriteString(fmt.Sprintf("  Lecture:\n    Schedule: %s\n    Teacher: %s\n", lec[lecId].Schedule, lec[lecId].Teacher))
-				msg.WriteString(fmt.Sprintf("  Practice:\n    Schedule: %s\n    Teacher: %s\n", prac[pracId].Schedule, prac[pracId].Teacher))
+				msg.WriteString(fmt.Sprintf("%s\n", lec[lecId].DersCode))
+				msg.WriteString(fmt.Sprintf("  Lecture: %s %s\n", lec[lecId].Schedule, lec[lecId].Teacher))
+				msg.WriteString(fmt.Sprintf("  Practice: %s %s\n", prac[pracId].Schedule, prac[pracId].Teacher))
 				msg.WriteString("------------------------------------------------------------\n")
 			} else if prac[pracId].Quota == prac[pracId].StudCount {
 				r.Printed[k] = false
